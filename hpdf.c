@@ -943,7 +943,8 @@ static int LclSaveToFile(lua_State *L)
   HPDF_STATUS result;
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
   const char * file_name = luaL_checkstring(L, 2);
-  fl = fopen(file_name, "we");
+  fl = fopen(file_name, "w");
+  //fl = fopen(file_name, "we"); // WTF is "we" ?!?!?
   if (fl) {
     fclose(fl);
     result = HPDF_SaveToFile(pdf, file_name);
@@ -1678,7 +1679,7 @@ static int LclUseUTFEncodings(lua_State *L)
  
 {
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
-  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
+  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);//HPDF_UseUTFEncodings
   lua_pushinteger(L, result);
   return 1;
 }
@@ -2928,8 +2929,8 @@ static int LclPage_SetDash(lua_State *L)
     luaL_argcheck(L, lua_istable(L, 2), 2, "expecting dash mode table");
     mode.num_ptn = lua_rawlen(L, 2);
     if (mode.num_ptn <= 8) {
-      mode.phase = luaL_checkinteger(L, 3);
       int J;
+      mode.phase = luaL_checkinteger(L, 3);
       for (J = 0; J < mode.num_ptn; J++) {
         int Dash;
         /* Stk: ... */
