@@ -944,7 +944,6 @@ static int LclSaveToFile(lua_State *L)
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
   const char * file_name = luaL_checkstring(L, 2);
   fl = fopen(file_name, "w");
-  //fl = fopen(file_name, "we"); // WTF is "we" ?!?!?
   if (fl) {
     fclose(fl);
     result = HPDF_SaveToFile(pdf, file_name);
@@ -1679,7 +1678,7 @@ static int LclUseUTFEncodings(lua_State *L)
  
 {
   HPDF_Doc pdf = LclHandleGet(L, CnHndDoc, 1);
-  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);//HPDF_UseUTFEncodings
+  HPDF_STATUS result = HPDF_UseUTFEncodings(pdf);
   lua_pushinteger(L, result);
   return 1;
 }
